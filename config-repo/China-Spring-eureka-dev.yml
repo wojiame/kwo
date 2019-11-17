@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: China-Spring-eureka #指定服务名
+  zipkin: #链式追踪
+    base-url: http://localhost:9411
+  boot: #服务监控
+    admin:
+      client:
+        url: http://localhost:8886
+server:
+  port: 8921 #服务端口
+eureka:
+  instance:
+    hostname: localhost #服务器地址，本地添localhost
+  client:
+    registerWithEureka: false #是否将自己注册到Eureka服务中，本身就是所有无需注册
+    fetchRegistry: false #是否从Eureka中获取注册信息
+    serviceUrl: #Eureka客户端与Eureka服务端进行交互的地址
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+#服务监控配置
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: health, info #如果改成 include: * 监控所有
